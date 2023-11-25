@@ -1,0 +1,61 @@
+<?php
+declare(strict_types=1);
+
+use Magento\Framework\View\Element\Template;
+use YireoTraining\ExampleMageWireFinder\Magewire\Finder;
+
+/** @var Template $block */
+/** @var Finder $magewire */
+$magewire->setAttributeCode1('style_bags');
+$magewire->setAttributeCode2('activity');
+$magewire->setAttributeCode3('material');
+?>
+<div id="magewire.finder">
+    <h3 class="text-2xl">Finder</h3>
+    <select wire:model="attributeValue1"
+            id="magewire.finder.<?= $magewire->getAttributeCode1() ?>"
+            <?= ($magewire->attributeValue1) ? 'disabled="disabled"': '' ?>>
+        <option></option>
+        <?php foreach($magewire->getAttribute1Options() as $option): ?>
+            <option value="<?= $option->getValue() ?>">
+                <?= $option->getLabel() ?>
+                (<?= $option->getProductCount() ?>)
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <select wire:model="attributeValue2"
+            id="magewire.finder.<?= $magewire->getAttributeCode2() ?>"
+            <?= ($magewire->attributeValue2) ? 'disabled="disabled"': '' ?>>
+        <option></option>
+        <?php foreach($magewire->getAttribute2Options() as $option): ?>
+            <option value="<?= $option->getValue() ?>">
+                <?= $option->getLabel() ?>
+                (<?= $option->getProductCount() ?>)
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <select wire:model="attributeValue3"
+            id="magewire.finder.<?= $magewire->getAttributeCode3() ?>"
+            <?= ($magewire->attributeValue3) ? 'disabled="disabled"': '' ?>>
+        <option></option>
+        <?php foreach($magewire->getAttribute3Options() as $option): ?>
+            <option value="<?= $option->getValue() ?>">
+                <?= $option->getLabel() ?>
+                (<?= $option->getProductCount() ?>)
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <button wire:click="resetForm"><?= __('Reset' ) ?></button>
+
+    <?php if ($magewire->getProducts()): ?>
+    <h3>Found products</h3>
+    <ul>
+        <?php foreach ($magewire->getProducts() as $product): ?>
+        <li><?= $product->getName() ?></li>
+        <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
+</div>
